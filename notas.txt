@@ -1,0 +1,35 @@
+Para generar un modulo nuevo:
+  nest g mo user
+
+Si el modulo A necesita un servicio del Modulo B entonces tengo que:
+  en el modulo B agrego a los exports el servicio que quiero usar en el modulo A
+  ahora voy al modulo A y agregamos el Modulo B a los imports
+
+Para cumplir con el patron Singleton todos los servicios deben tener @Injectable:
+  Lo que dice esto es que Nest debe manejar ese servicio como una dependencia y que debe asegurarse
+  que cumpla con el patron Singleton (guardar las intancias en memoria para cuando se pida
+  otra vez).
+  Los controladores no se pueden injectar
+  Hay que evitar que el Servicio A injecte el Servicio B y el Servicio B injecte el Servicio A.
+  Solamente uno puede ser injectado en el otro.
+
+Use class => necesitamos un servicio que va a ser injectado en otro lado
+Use value => lo usamos como si fuese una variable global para poder injectarla en cualquier modulo
+  desde app.module creamos la variable con el valor y en los providers la declaramos de la siguiente forma:
+    {
+      provide: 'API_KEY',
+      useValue: API_KEY,
+    }
+  Luego en el servicio que la querramos la tenemos que injectar en el constructor
+    @Inject('API_KEY') private apiKey: string
+  Para que sea más dinamico puedo usar las variables de entorno
+    $env:NODE_ENV = 'prod'; npm run start:dev => para setear la variable de entorno
+
+Para usar useFactory:
+  npm i --save @nestjs/axios
+  No es aconsejable llamar a una api externa en el factory ya que ralentizas el inicio del sv
+
+Global Module:
+  Instanciado en todos los modulos sin necesidad de importar ese modulo en el modulo que se quiera usar
+  Ejemplo: modulo database
+
