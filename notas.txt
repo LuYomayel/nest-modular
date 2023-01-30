@@ -32,4 +32,5 @@ Para usar useFactory:
 Global Module:
   Instanciado en todos los modulos sin necesidad de importar ese modulo en el modulo que se quiera usar
   Ejemplo: modulo database
-
+  Se utiliza cuando queres usar variables globales en todos los modulos (no hace falta importarlo, solamente exportarlo
+  desde su propio modulo)
