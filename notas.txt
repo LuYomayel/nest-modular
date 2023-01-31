@@ -33,3 +33,44 @@ Global Module:
   Instanciado en todos los modulos sin necesidad de importar ese modulo en el modulo que se quiera usar
   Ejemplo: modulo database
 
+Configuracion por ambientes:
+
+Validacion de esquemas:
+  npm i --save joi
+  validationSchema: Joi.object({
+        API_KEY: Joi.number().required(),
+        DATABASE_NAME: Joi.string().required(),
+        DATABASE_PORT: Joi.number().required(),
+      }),
+
+swagger:
+  npm install --save @nestjs/swagger
+  https://docs.nestjs.com/openapi/introduction => para la documentacion
+  para que los dtos aparezcan en la documentacion
+    en nest-cli.json
+      "compilerOptions":{
+        "plugins": ["@nestjs/swagger"]
+      }
+  apiProperty para agregarle una description a una propiedad de un dto
+  apiTags para agrupar los controllers
+    @ApiTags('Products')
+  ApiOperation({summary:' List of products '}) => para agregar una descripcion a algun endpoint
+
+deploy:
+  Hay que habilitar los CORSS para que se pueda acceder desde cualquier lado a tu API
+    ir a main.ts
+      antes del app.listen(); agrego:
+        app.enableCors();
+  Verificar la version de node en package.json
+    "engines":{
+      "node":"14.x"
+    }
+  Crear un nuevo archivo => Procfile => ahí se agrega el script para correr la app
+  El puerto debe ser dinamico por variables de entorno
+    PORT=XXXX
+    en el main
+      app.listen(process.env.PORT || 3000)
+  Hay que poner todo en la rama master para que Heroku lo vea
+
+
+
